@@ -1,3 +1,6 @@
-/users.json
-/expenses.csv
+#exclude all json file
+*.json
+#exclude all csv file
+*.csv
+#exclude all cache folder
 /__pycache__

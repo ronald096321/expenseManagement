@@ -10,15 +10,17 @@ def createfile():
 detail = []
 
 def userinput():
-    date = int(input(" Please enter the date : "))
+    date = input(" Please enter the date in DD-MM-YYYY format : ");
     category = input(" Please enter the category you want : ")
-    description = input( " Description : ")
+    description = input( "Please enter the Description : ")
     amount = int(input(" Please enter the amount : "))
-    data = date+","+category+","+description+","+amount
-    return data
+    return {
+        "date" : date,
+        "category" : category,
+        "description" : description,
+        "amount" : amount
+    }
 
-createfile()
-userinput()
 
 
     

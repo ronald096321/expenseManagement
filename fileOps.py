@@ -6,9 +6,6 @@ import operator
 
 #Function to add all the expenses to the file
 def addExpTOFile(userData) :
-#   print(userData);
-#   if type(userData) is dict :
-      # print("In",userData);
       path = "expenses.csv";
       data = userData.values();
       fileExist = exists(path);
@@ -34,10 +31,8 @@ def getAllExpFromFile() :
                   fileObj = open(path,'r');
                   fileData = csv.reader(fileObj);
                   expData = list(fileData);
-                  # stripEmpty = expData.rstrip();
-                  print('fileData',expData);
+                  print("csv out", expData);
                   finalObj = mapExpenseData(expData);
-                  # print('fileData',finalObj);
                   return finalObj;
         
 
@@ -45,14 +40,15 @@ def getAllExpFromFile() :
 
 def mapExpenseData(expData) :
        expenseList = [];
+       length = len(expData);
        for index in range(len(expData)) :
-              if index > 0 :
+              if index > 0 and index != length :
                      expDict = {
                             "index" : index,
                             "Date" : "",
                             "Category" : "",
                             "Description": "",
-                            "Amount" : 0
+                            "Amount" : "0"
                      }
                      for jindex in range(len(expData[index])) :
                             if jindex == 0 : 
@@ -65,7 +61,7 @@ def mapExpenseData(expData) :
                                    expDict["Amount"] = expData[index][jindex];
                      expenseList.append(expDict);
                             
-       return expenseList;
+       return expenseList[0:len(expenseList)-1];
 
 def showAllExpenses() : 
        fileData = getAllExpFromFile();
@@ -75,24 +71,27 @@ def showAllExpenses() :
 def filter(key , value) :
        fileData = getAllExpFromFile();
        filteredResult = [d for d in fileData if d[key] == value];
-       displayResult(filteredResult);
-       print("FilteredData" , filteredResult);     
+       displayResult(filteredResult);     
      
 def sort(key) :
        fileData = getAllExpFromFile();
        sortedResult = sorted(fileData , key=operator.itemgetter(key));
-       displayResult(sortedResult);
-       print("Sorted Data" , sortedResult);  
+       displayResult(sortedResult);   
 
 def modify(index ,key , value) : 
          fileData = getAllExpFromFile();
          fileData[index][key] = value;
+         print(" Modify Successful !");
          displayResult(fileData);
 
 def delete(index) :
        fileData = getAllExpFromFile();
        del fileData[index];
+       for index1 in range(len(fileData)) :
+              fileData[index1]["index"] = index1 + 1;
+       print(" Delete Successful !");
        displayResult(fileData);
+
 
 
 def displayResult(data) : 
@@ -107,12 +106,10 @@ def displayResult(data) :
                      Description = operator.getitem(desc, slice(0, 15));
               else :
                     lenToFill = 15 - len(desc);
-                    Description = desc.ljust(lenToFill,"%");           
-            #   if len(Description) <= 20 :
-            #          lengthToFill = 20 - len(Description);
-            #          Description = Description.ljust(lengthToFill," ") 
+                    Description = desc.ljust(lenToFill," ");           
               print("",fileData[index]["index"],"  ",fileData[index]["Date"],"     ",fileData[index]["Category"],"    ",Description,"              ",fileData[index]["Amount"]," ");
-       
-                                
-showAllExpenses();   
-# sort('Category');    
+
+
+
+
+# getAllExpFromFile();

@@ -1,8 +1,9 @@
 from auth import authFile;
-from createExp import userinput;
-from fileOps import addExpTOFile ,getAllExpFromFile; 
+from createExp import userinput,filterOrSortExpense,modifyOrDelete;
+from fileOps import addExpTOFile ,showAllExpenses; 
 #Starter file
 def loginOrRegister(login) : 
+            
             match login:
                 case 1 :
                     return authFile();
@@ -28,13 +29,15 @@ def performOperation(option) :
                     print("Created Expense");
                     return 0;
                 case 2 : 
-                    getAllExpFromFile();
+                    showAllExpenses();
                     print("fetched Expense");
                     return 0;
                 case 3:
+                    filterOrSortExpense();
                     print("Filtered Expense");
                     return 0;
                 case 4 :
+                    modifyOrDelete();
                     print("Modified Expense");
                     return 0;
                 case 5 : 
@@ -54,8 +57,16 @@ login = int(input("         Please Enter 1 to login and 2 to register   : "));
 isUserLoggedIn = loginOrRegister(login);
 
 if isUserLoggedIn : 
-      userOption = expenseOptions();
-      performOperation(userOption);
+      performAction = True;
+      while performAction : 
+        userOption = expenseOptions();
+        performOperation(userOption);
+        repeat = input("Press Y/y to continue and N/n to abort : ");
+        if repeat == 'Y' or repeat == 'y' : 
+             performAction = True;
+        else :
+             performAction = False;
+             print("Please enter correct input");
       
 
 

@@ -3,8 +3,8 @@
 #exclude all csv file
 *.csv
 #exclude all cache folder
-/__pycache__
+/__pycache__/
 
-__pycache__/
+__pycache__/*.pyc
 
 *.pyc
